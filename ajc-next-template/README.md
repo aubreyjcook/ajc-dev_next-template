@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ajc-next-template
 
-## Getting Started
+A neutral Next.js frame: header, main, and footer, with no nav and no product pages. Use it as the start of a site or an app.
 
-First, run the development server:
+The app lives in this folder. From here:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Site name
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`lib/site.ts` holds `name` and `description`. The root layout uses them for metadata. The header and footer render `name` so those regions stay visible. Change it there.
 
-## Learn More
+Nested routes can set their own title. The template is `%s · {name}`, so a page titled `Example` becomes `Example · Site`.
 
-To learn more about Next.js, take a look at the following resources:
+## Add a route
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Create `app/<segment>/page.tsx`. The root layout wraps it in the frame. `/example` is a placeholder that shows this. Delete `app/example` when you start a real site. Nothing in the header links to it.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Header and footer
 
-## Deploy on Vercel
+`components/layout/site-header.tsx` and `components/layout/site-footer.tsx` are empty aside from the site name. Add links there when you have pages. `components/layout/app-frame.tsx` stacks the header, `<main>`, and footer.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Skip the frame
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+A route group with its own layout does not have to render `AppFrame`. For a section that should stand alone, add something like `app/(standalone)/layout.tsx` and omit the frame in that layout. Routes outside that group keep the root frame.
